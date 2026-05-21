@@ -1,0 +1,20 @@
+{
+  "name": "html-to-pdf",
+  "version": "1.0.0",
+  "description": "Node.js HTML to PDF converter",
+  "main": "convert.js",
+  "scripts": {
+    "convert": "node convert.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "html",
+    "pdf",
+    "puppeteer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.10.2"
+  }
+}

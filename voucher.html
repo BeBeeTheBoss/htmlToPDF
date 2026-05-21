@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @page { size: A4; margin: 8mm; }
+    * { box-sizing: border-box; font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+    body { background: #fff; color: #111; }
+
+    .sheet {
+      height: 281mm;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5mm;
+      page-break-after: always;
+    }
+    .sheet:last-child { page-break-after: auto; }
+
+    .voucher-card {
+      width: 92%;
+      margin: 0 auto;
+      height: 90mm;
+      border: 2px solid #2076d2;
+      border-radius: 18px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      page-break-inside: avoid;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 34px;
+      margin-bottom: 4px;
+    }
+    .logo-img { height: 28px; object-fit: contain; }
+
+    .header-text {
+      text-align: right;
+      color: #e52d27;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 26px;
+      flex-grow: 1;
+      border-top: 2px solid #2076d2;
+      position: relative;
+    }
+
+    .main-grid::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: #2076d2;
+    }
+
+    .content-box { padding-top: 7px; }
+    .box-left { padding-right: 10px; }
+    .box-right { padding-left: 10px; }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    .main-title {
+      font-size: 16px;
+      font-weight: 700;
+      width: 52px;
+      flex-shrink: 0;
+      color: #111;
+      margin-right: 6px;
+      white-space: nowrap;
+    }
+
+    .details { flex-grow: 1; }
+    .bold-lbl { font-weight: 700; color: #111; }
+
+    .footer-box {
+      border-top: 2px solid #2076d2;
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sheet">
+    <div class="voucher-card">
+      <div class="header"><img src="https://pro1global.com/assets/photos/pro_1.png" alt="PRO1 Global Logo" class="logo-img"><div class="header-text">မြန်မာနိုင်ငံ၏ ပထမဆုံးနှင့် အကြီးဆုံး ဆောက်လုပ်ရေးနှင့်<br>အိမ်သုံးပစ္စည်းအရောင်းပစ္စည်း အရောင်းစင်တာ</div></div>
+      <div class="main-grid"><div class="content-box box-left info-row"><div class="main-title">From :</div><div class="details"><div><span class="bold-lbl">Company Name -</span> PRO1 Global Home Center</div><div><span class="bold-lbl">Ph No -</span> 09777005398 / 095027396</div><div><span class="bold-lbl">Address -</span> အမှတ် (၇၆)၊ လမ်းသစ်လမ်း၊ အာလိန်ငါးဆင့်ဘုရားအနီး၊ ဝပ်ရှော့မှတ်တိုင် အင်းစိန်မြို့နယ်။</div></div></div><div class="content-box box-right info-row"><div class="main-title">To :</div><div class="details"><div><span class="bold-lbl">Customer Name -</span> Aung Chan Nyein</div><div><span class="bold-lbl">Ph No -</span> 09765496287</div><div><span class="bold-lbl">Address -</span> ရွှေတောင်ကြားလမ်း၊ Skyline Grand Penthouse၊ လှိုင်သာယာမြို့နယ်</div></div></div><div class="footer-box box-left">Order Date: 20-05-2026</div><div class="footer-box box-right">Order Number: PRO1130526001</div></div>
+    </div>
+
+    <div class="voucher-card">
+      <div class="header"><img src="https://pro1global.com/assets/photos/pro_1.png" alt="PRO1 Global Logo" class="logo-img"><div class="header-text">မြန်မာနိုင်ငံ၏ ပထမဆုံးနှင့် အကြီးဆုံး ဆောက်လုပ်ရေးနှင့်<br>အိမ်သုံးပစ္စည်းအရောင်းပစ္စည်း အရောင်းစင်တာ</div></div>
+      <div class="main-grid"><div class="content-box box-left info-row"><div class="main-title">From :</div><div class="details"><div><span class="bold-lbl">Company Name -</span> PRO1 Global Home Center</div><div><span class="bold-lbl">Ph No -</span> 09777005398 / 095027396</div><div><span class="bold-lbl">Address -</span> အမှတ် (၇၆)၊ လမ်းသစ်လမ်း၊ အာလိန်ငါးဆင့်ဘုရားအနီး၊ ဝပ်ရှော့မှတ်တိုင် အင်းစိန်မြို့နယ်။</div></div></div><div class="content-box box-right info-row"><div class="main-title">To :</div><div class="details"><div><span class="bold-lbl">Customer Name -</span> Zayar Phyo Paing</div><div><span class="bold-lbl">Ph No -</span> 09765496268</div><div><span class="bold-lbl">Address -</span> Star City 23 apt</div></div></div><div class="footer-box box-left">Order Date: 20-05-2026</div><div class="footer-box box-right">Order Number: PRO1130526002</div></div>
+    </div>
+
+    <div class="voucher-card">
+      <div class="header"><img src="https://pro1global.com/assets/photos/pro_1.png" alt="PRO1 Global Logo" class="logo-img"><div class="header-text">မြန်မာနိုင်ငံ၏ ပထမဆုံးနှင့် အကြီးဆုံး ဆောက်လုပ်ရေးနှင့်<br>အိမ်သုံးပစ္စည်းအရောင်းပစ္စည်း အရောင်းစင်တာ</div></div>
+      <div class="main-grid"><div class="content-box box-left info-row"><div class="main-title">From :</div><div class="details"><div><span class="bold-lbl">Company Name -</span> PRO1 Global Home Center</div><div><span class="bold-lbl">Ph No -</span> 09777005398 / 095027396</div><div><span class="bold-lbl">Address -</span> အမှတ် (၇၆)၊ လမ်းသစ်လမ်း၊ အာလိန်ငါးဆင့်ဘုရားအနီး၊ ဝပ်ရှော့မှတ်တိုင် အင်းစိန်မြို့နယ်။</div></div></div><div class="content-box box-right info-row"><div class="main-title">To :</div><div class="details"><div><span class="bold-lbl">Customer Name -</span> Aung Zay Zay Phyo</div><div><span class="bold-lbl">Ph No -</span> 09769274236</div><div><span class="bold-lbl">Address -</span> Parami Valley</div></div></div><div class="footer-box box-left">Order Date: 20-05-2026</div><div class="footer-box box-right">Order Number: PRO1130526003</div></div>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <div class="voucher-card">
+      <div class="header"><img src="https://pro1global.com/assets/photos/pro_1.png" alt="PRO1 Global Logo" class="logo-img"><div class="header-text">မြန်မာနိုင်ငံ၏ ပထမဆုံးနှင့် အကြီးဆုံး ဆောက်လုပ်ရေးနှင့်<br>အိမ်သုံးပစ္စည်းအရောင်းပစ္စည်း အရောင်းစင်တာ</div></div>
+      <div class="main-grid"><div class="content-box box-left info-row"><div class="main-title">From :</div><div class="details"><div><span class="bold-lbl">Company Name -</span> PRO1 Global Home Center</div><div><span class="bold-lbl">Ph No -</span> 09777005398 / 095027396</div><div><span class="bold-lbl">Address -</span> အမှတ် (၇၆)၊ လမ်းသစ်လမ်း၊ အာလိန်ငါးဆင့်ဘုရားအနီး၊ ဝပ်ရှော့မှတ်တိုင် အင်းစိန်မြို့နယ်။</div></div></div><div class="content-box box-right info-row"><div class="main-title">To :</div><div class="details"><div><span class="bold-lbl">Customer Name -</span> undefined</div><div><span class="bold-lbl">Ph No -</span> 0undefined</div><div><span class="bold-lbl">Address -</span> undefined</div></div></div><div class="footer-box box-left">Order Date: 20-05-2026</div><div class="footer-box box-right">Order Number: undefined</div></div>
+    </div>
+  </div>
+
+</body>
+</html>
