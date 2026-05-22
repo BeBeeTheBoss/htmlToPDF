@@ -93,19 +93,36 @@ function buildCombinedHtml(items) {
 }
 
 async function htmlToPdfBuffer(html) {
-  const browser = await puppeteer.launch({
+  const common = {
     headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-gpu',
-      '--disable-crash-reporter',
-      '--disable-breakpad',
-      '--no-zygote',
-      '--single-process',
-    ],
-  });
+    executablePath: process.env.CHROME_PATH || undefined,
+  };
+
+  let browser;
+  try {
+    // Prefer a stable multi-process launch first.
+    browser = await puppeteer.launch({
+      ...common,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    });
+  } catch (firstErr) {
+    // Fallback for restricted containers.
+    browser = await puppeteer.launch({
+      ...common,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--disable-crash-reporter',
+        '--disable-breakpad',
+        '--no-zygote',
+        '--single-process',
+      ],
+    });
+    // Keep first error context for server logs.
+    console.warn('[launch-fallback] Primary Chromium launch failed:', firstErr.message);
+  }
 
   try {
     const page = await browser.newPage();
@@ -195,6 +212,7 @@ const server = http.createServer(async (req, res) => {
         });
         return res.end(pdf);
       } catch (error) {
+        console.error('[convert] PDF generation failed:', error);
         return sendJson(res, 500, {
           error: 'PDF generation failed',
           message: error.message,
@@ -263,6 +281,7 @@ const server = http.createServer(async (req, res) => {
         });
         return res.end(pdf);
       } catch (error) {
+        console.error('[convert-vouchers] PDF generation failed:', error);
         return sendJson(res, 500, {
           error: 'PDF generation failed',
           message: error.message,
