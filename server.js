@@ -1,7 +1,7 @@
 const http = require('http');
 const puppeteer = require('puppeteer');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 6000;
 
 function normalizeHtml(inputText) {
   const text = typeof inputText === 'string' ? inputText : String(inputText ?? '');
