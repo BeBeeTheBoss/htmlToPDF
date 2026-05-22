@@ -18,8 +18,72 @@ function normalizeHtml(inputText) {
   return text;
 }
 
+function extractVoucherCards(html) {
+  const cards = [];
+  const needle = '<div class="voucher-card"';
+  let from = 0;
+
+  while (true) {
+    const start = html.indexOf(needle, from);
+    if (start === -1) break;
+
+    let i = start;
+    let depth = 0;
+    let foundStart = false;
+    let end = -1;
+
+    while (i < html.length) {
+      const nextOpen = html.indexOf('<div', i);
+      const nextClose = html.indexOf('</div>', i);
+
+      if (nextClose === -1 && nextOpen === -1) break;
+
+      if (nextOpen !== -1 && (nextOpen < nextClose || nextClose === -1)) {
+        depth += 1;
+        foundStart = true;
+        i = nextOpen + 4;
+      } else {
+        depth -= 1;
+        i = nextClose + 6;
+        if (foundStart && depth === 0) {
+          end = i;
+          break;
+        }
+      }
+    }
+
+    if (end === -1) break;
+    cards.push(html.slice(start, end));
+    from = end;
+  }
+
+  return cards;
+}
+
+function enforceThreePerPage(html) {
+  if (!html.includes('voucher-card')) return html;
+
+  const cards = extractVoucherCards(html);
+  if (cards.length <= 3) return html;
+
+  const bodyOpen = html.indexOf('<body');
+  if (bodyOpen === -1) return html;
+  const bodyStart = html.indexOf('>', bodyOpen);
+  const bodyEnd = html.lastIndexOf('</body>');
+  if (bodyStart === -1 || bodyEnd === -1 || bodyEnd <= bodyStart) return html;
+
+  let rebuilt = '\n';
+  for (let i = 0; i < cards.length; i += 3) {
+    rebuilt += '  <div class="sheet">\n';
+    rebuilt += cards.slice(i, i + 3).map((card) => `    ${card.trim()}`).join('\n\n');
+    rebuilt += '\n  </div>\n\n';
+  }
+
+  return html.slice(0, bodyStart + 1) + rebuilt + html.slice(bodyEnd);
+}
+
 function buildCombinedHtml(items) {
-  const chunks = items.map((item) => normalizeHtml(item.html || ''));
+  const chunks = items.map((item) => enforceThreePerPage(normalizeHtml(item.html || '')));
   return chunks
     .map((html, idx) => {
       if (idx === chunks.length - 1) return html;
@@ -122,7 +186,7 @@ const server = http.createServer(async (req, res) => {
           combinedHtml = buildCombinedHtml(body);
         }
 
-        const pdf = await htmlToPdfBuffer(combinedHtml);
+        const pdf = await htmlToPdfBuffer(enforceThreePerPage(combinedHtml));
 
         res.writeHead(200, {
           'Content-Type': 'application/pdf',
@@ -191,7 +255,7 @@ const server = http.createServer(async (req, res) => {
           combinedHtml = buildCombinedHtml(body);
         }
 
-        const pdf = await htmlToPdfBuffer(combinedHtml);
+        const pdf = await htmlToPdfBuffer(enforceThreePerPage(combinedHtml));
         res.writeHead(200, {
           'Content-Type': 'application/pdf',
           'Content-Disposition': 'attachment; filename="vouchers.pdf"',
